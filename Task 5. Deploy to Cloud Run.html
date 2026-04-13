@@ -1,0 +1,25 @@
+In this task, you deploy your containerized application to Cloud Run. This process spins up a service that can respond to web requests via a secure HTTPS URL.
+
+Deploy your containerized application to Cloud Run using the following command:
+gcloud run deploy helloworld \
+    --image $LOCATION-docker.pkg.dev/$GOOGLE_CLOUD_PROJECT/my-repository/helloworld \
+    --allow-unauthenticated \
+    --region=$LOCATION
+Copied!
+The allow-unauthenticated flag in the command above makes your service publicly accessible.
+
+If prompted to enable APIs, type Y.
+Wait a few moments until the deployment is complete. On success, the command line displays the service URL:
+
+Service [helloworld] revision [helloworld-00001-xit] has been deployed
+and is serving 100 percent of traffic.
+
+Service URL: https://helloworld-h6cp412q3a-uc.a.run.app
+You can now visit your deployed container by opening the service URL in any browser window.
+
+Congratulations! You have just deployed an application packaged in a container image to Cloud Run. Cloud Run automatically and horizontally scales your container image to handle the received requests, then scales down when demand decreases. In your own environment, you only pay for the CPU, memory, and networking consumed during request handling.
+
+For this lab you used the gcloud command-line. Cloud Run is also available via Cloud console.
+
+In the Google Cloud console, on the Navigation menu (Navigation menu icon), click Cloud Run and you should see your helloworld service listed:
+Cloud Run tab displaying the helloworld service

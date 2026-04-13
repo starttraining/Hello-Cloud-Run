@@ -1,0 +1,51 @@
+In this task, you will build a simple express-based NodeJS application which responds to HTTP requests.
+
+In Cloud Shell create a new directory named helloworld, then move your view into that directory:
+mkdir helloworld && cd helloworld
+
+Next you'll be creating and editing files. To edit files, use nano or the Cloud Shell Code Editor by clicking on the Open Editor button in Cloud Shell.
+
+Create a package.json file, then add the following content to it:
+
+nano package.json
+
+{
+  "name": "helloworld",
+  "description": "Simple hello world sample in Node",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Google LLC",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
+
+Most importantly, the file above contains a start script command and a dependency on the Express web application framework.
+
+Press CTRL+X, then Y, then Enter to save the package.json file.
+
+Next, in the same directory, create an index.js file, and copy the following lines into it:
+
+nano index.js
+
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 8080;
+
+app.get('/', (req, res) => {
+  const name = process.env.NAME || 'World';
+  res.send(`Hello ${name}!`);
+});
+
+app.listen(port, () => {
+  console.log(`helloworld: listening on port ${port}`);
+});
+
+This code creates a basic web server that listens on the port defined by the PORT environment variable. Your app is now finished and ready to be containerized and uploaded to Artifact Registry.
+
+Press CTRL+X, then Y, then Enter to save the index.js file
+Note: You can use many other languages to get started with Cloud Run. You can find instructions for Go, Python, Java, PHP, Ruby, Shell scripts, and others from the Quickstarts guide.

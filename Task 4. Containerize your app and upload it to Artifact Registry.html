@@ -1,0 +1,43 @@
+In this task, you containerize your sample application and push the image to Artifact Registry.
+
+To containerize the sample app, create a new file named Dockerfile in the same directory as the source files. This file acts as a recipe, instructing Docker how to build your image:
+nano Dockerfile
+Copied!
+# Use the official lightweight Node.js 12 image.
+# https://hub.docker.com/_/node
+FROM node:20-slim
+
+# Create and change to the app directory.
+WORKDIR /usr/src/app
+
+# Copy application dependency manifests to the container image.
+# A wildcard is used to ensure copying both package.json AND package-lock.json (when available).
+# Copying this first prevents re-running npm install on every code change.
+COPY package*.json ./
+
+# Install production dependencies.
+# If you add a package-lock.json, speed your build by switching to 'npm ci'.
+# RUN npm ci --only=production
+RUN npm install --only=production
+
+# Copy local code to the container image.
+COPY . ./
+
+# Run the web service on container startup.
+CMD [ "npm", "start" ]
+
+Press CTRL+X, then Y, then Enter to save the Dockerfile file.
+
+Now, build your container image using Cloud Build by running the following command from the directory containing the Dockerfile. (Note the $GOOGLE_CLOUD_PROJECT environmental variable in the command, which contains your lab's Project ID):
+
+gcloud builds submit --tag $LOCATION-docker.pkg.dev/$GOOGLE_CLOUD_PROJECT/my-repository/helloworld
+
+Cloud Build is a service that executes your builds on Google Cloud. It executes a series of build steps, where each build step is run in a Docker container to produce your application container (or other artifacts) and push it to Artifact Registry, all in one command.
+
+Once pushed to the registry, you will see a SUCCESS message containing the image name. The image is stored in Artifact Registry and can be re-used if desired.
+
+To run and test the application locally from Cloud Shell, start it using this standard docker command:
+docker run -d -p 8080:8080 $LOCATION-docker.pkg.dev/$GOOGLE_CLOUD_PROJECT/my-repository/helloworld
+
+In the Cloud Shell window, click on Web preview and select Preview on port 8080.
+This should open a browser window showing the "Hello World!" message. You could also simply use curl localhost:8080.

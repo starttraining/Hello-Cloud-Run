@@ -1,0 +1,13 @@
+In this task, you enable the necessary APIs and set up environment variables to simplify your commands.
+
+From Cloud Shell, enable the Cloud Run API and Artifact Registry API. This allows your project to accept requests for these services:
+gcloud services enable run.googleapis.com artifactregistry.googleapis.com
+
+If you are asked to authorize the use of your credentials, do so. You should then see a successful message similar to this one:
+Operation "operations/acf.cc11852d-40af-47ad-9d59-477a12847c9e" finished successfully.
+Note: You can also enable the API using the APIs & Services section of the Google Cloud console.
+Set the compute region:
+gcloud config set compute/region "REGION"
+
+Create a LOCATION environment variable:
+LOCATION="Region"
